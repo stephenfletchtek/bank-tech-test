@@ -10,7 +10,7 @@ class BankAccount
   def statement
     data = 'date || credit || debit || balance'
     @transactions.each do |line|
-      data += "\n20/09/2022 || #{two_dec_pl(line[0])} || || #{two_dec_pl(line[1])}"
+      data += "\n20/09/2022 ||#{two_dec_pl(line[0])} ||#{two_dec_pl(line[1])} ||#{two_dec_pl(line[2])}"
     end
     data
   end
@@ -19,12 +19,21 @@ class BankAccount
     return unless amount.positive?
 
     @balance += amount
-    @transactions.unshift([amount, @balance])
+    @transactions.unshift([amount, 0, @balance])
+  end
+
+  def withdraw(amount = 0)
+    return unless amount.positive?
+
+    @balance -= amount
+    @transactions.unshift([0, amount, @balance])
   end
 
   private
 
   def two_dec_pl(num)
-    format('%.2f', num)
+    return '' if num.zero?
+
+    " #{format('%.2f', num)}"
   end
 end
