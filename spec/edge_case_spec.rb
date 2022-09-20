@@ -17,4 +17,10 @@ RSpec.describe BankAccount do
     @my_account.deposit(0)
     expect(@my_account.statement).to eq('date || credit || debit || balance')    
   end
+
+  it 'can go overdrawn' do
+    @my_account.withdraw(50)
+    statement = "date || credit || debit || balance\n20/09/2022 || || 50.00 || -50.00"
+    expect(@my_account.statement).to eq(statement)
+  end
 end
