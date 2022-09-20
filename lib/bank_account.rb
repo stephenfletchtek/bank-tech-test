@@ -7,12 +7,10 @@ class BankAccount
   end
 
   def statement
-    if @deposit == 200
+    if @deposit != 0
+      currency = '%.2f' % @deposit
       return 'date || credit || debit || balance\n'\
-      '20/09/2022 || 200.00 || || 200.00'
-    elsif @deposit == 100
-      return 'date || credit || debit || balance\n'\
-      '20/09/2022 || 100.00 || || 100.00'
+      "20/09/2022 || #{currency} || || #{currency}"
     end
     'date || credit || debit || balance'
   end
