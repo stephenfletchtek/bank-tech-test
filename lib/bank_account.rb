@@ -7,16 +7,9 @@ class BankAccount
   end
 
   def statement
-    data = 'date || credit || debit || balance'
-
-    balance = 0
-    data_list = @transactions.sort.map do |line|
-      balance += (line[1] - line[2])
-      "#{time_to_str(line[0])} ||#{two_dec_pl(line[1])} ||#{two_dec_pl(line[2])} ||#{two_dec_pl(balance)}"
-    end
-
-    data_list.reverse.each { |line| data += "\n#{line}" }
-    data
+    output_list = transaction_list(@transactions)
+    output_list << 'date || credit || debit || balance'
+    output_list.reverse.join("\n")
   end
 
   def deposit(amount, time = Time.now)
@@ -24,7 +17,7 @@ class BankAccount
     raise msg unless (amount.is_a? Numeric) && amount.positive?
     raise 'second argument takes a Time object' unless time.is_a? Time
 
-    @transactions << ([time, amount, 0])
+    @transactions << ([time, amount])
   end
 
   def withdraw(amount, time = Time.now)
@@ -32,18 +25,30 @@ class BankAccount
     raise msg unless (amount.is_a? Numeric) && amount.positive?
     raise 'second argument takes a Time object' unless time.is_a? Time
 
-    @transactions << ([time, 0, amount])
+    @transactions << ([time, -amount])
   end
 
   private
 
   def two_dec_pl(num)
-    return '' if num.zero?
-
-    " #{format('%.2f', num)}"
+    format('%.2f', num)
   end
 
   def time_to_str(time)
     time.strftime('%d/%m/%Y')
+  end
+
+  def credit_debit(amount)
+    return " || #{two_dec_pl(amount)} || || " if amount.positive?
+
+    " || || #{two_dec_pl(-amount)} || "
+  end
+
+  def transaction_list(transactions)
+    balance = 0
+    transactions.sort.map do |line|
+      balance += line[1]
+      time_to_str(line[0]).to_s + credit_debit(line[1]) + two_dec_pl(balance).to_s
+    end
   end
 end
