@@ -16,6 +16,8 @@ class BankAccount
   end
 
   def deposit(amount = 0)
+    msg = 'deposit method takes one positive number as an argument'
+    fail msg unless amount.is_a? Numeric
     return unless amount.positive?
 
     @balance += amount

@@ -23,4 +23,8 @@ RSpec.describe BankAccount do
     statement = "date || credit || debit || balance\n20/09/2022 || || 50.00 || -50.00"
     expect(@my_account.statement).to eq(statement)
   end
+
+  it 'rejects a string argument' do
+    expect{ @my_account.deposit("loadsa money") }.to raise_error("deposit method takes one positive number as an argument")
+  end
 end
