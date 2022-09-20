@@ -22,7 +22,7 @@ date || credit || debit || balance
 10/01/2023 || 1000.00 || || 1000.00
 ```
 
-#ß# Dependencies
+## Dependencies
 
 ```ruby
 gem "rspec", "~> 3.11"
