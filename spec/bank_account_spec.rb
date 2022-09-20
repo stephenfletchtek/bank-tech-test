@@ -38,5 +38,16 @@ RSpec.describe BankAccount do
       '20/09/2022 || 200.00 || || 200.00'
       expect(result).to eq(statement)      
     end
+
+    it 'adds 90, then 100, and shows statement' do
+      @my_account.deposit(90)
+      @my_account.deposit(100)
+      result = @my_account.statement
+      statement = 'date || credit || debit || balance\n'\
+      '20/09/2022 || 100.00 || || 190.00\n'\
+      '20/09/2022 || 90.00 || || 90.00'
+      expect(result).to eq(statement)      
+    end
+
   end
 end
