@@ -17,7 +17,7 @@ class BankAccount
       '20/09/2022 || 50.00 || || 250.00\n'\
       '20/09/2022 || 200.00 || || 200.00'
     elsif @deposit != 0
-      currency = '%.2f' % @deposit
+      currency = format('%.2f', @deposit)
       return 'date || credit || debit || balance\n'\
       "20/09/2022 || #{currency} || || #{currency}"
     end
