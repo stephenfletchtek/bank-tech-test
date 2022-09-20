@@ -14,17 +14,13 @@ class BankAccount
   end
 
   def deposit(amount, time = Time.now)
-    msg = 'deposit method takes a positive number as first argument'
-    raise msg unless (amount.is_a? Numeric) && amount.positive?
-    raise 'second argument takes a Time object' unless time.is_a? Time
+    check_args(amount, time)
 
     @transactions << ([time, amount])
   end
 
   def withdraw(amount, time = Time.now)
-    msg = 'withdraw method takes a positive number as first argument'
-    raise msg unless (amount.is_a? Numeric) && amount.positive?
-    raise 'second argument takes a Time object' unless time.is_a? Time
+    check_args(amount, time)
 
     @transactions << ([time, -amount])
   end
@@ -48,8 +44,14 @@ class BankAccount
   def transaction_list(transactions)
     accumulator = @opening_balance
     transactions.sort.map do |line|
-    accumulator += line[1]
+      accumulator += line[1]
       time_to_str(line[0]).to_s + credit_debit(line[1]) + two_dec_pl(accumulator).to_s
     end
+  end
+
+  def check_args(amount, time)
+    msg = 'method takes a positive number as first argument'
+    raise msg unless (amount.is_a? Numeric) && amount.positive?
+    raise 'second argument takes a Time object' unless time.is_a? Time
   end
 end
