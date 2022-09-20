@@ -10,7 +10,7 @@ RSpec.describe BankAccount do
 
   it 'wrong number of arguments' do
     expect { @my_account.deposit }
-      .to raise_error('wrong number of arguments (given 0, expected 1)')
+      .to raise_error('wrong number of arguments (given 0, expected 1..2)')
   end
 
   it 'rejects zero deposit' do
@@ -21,12 +21,6 @@ RSpec.describe BankAccount do
   it 'negative withdrawal' do
     expect { @my_account.withdraw(-25) }
       .to raise_error('withdraw method takes one positive number as an argument')
-  end
-
-  it 'can go overdrawn' do
-    @my_account.withdraw(50)
-    statement = "date || credit || debit || balance\n20/09/2022 || || 50.00 || -50.00"
-    expect(@my_account.statement).to eq(statement)
   end
 
   it 'rejects a string argument' do

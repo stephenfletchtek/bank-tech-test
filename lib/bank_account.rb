@@ -9,26 +9,26 @@ class BankAccount
 
   def statement
     data = 'date || credit || debit || balance'
-    @transactions.each do |line|
-      data += "\n20/09/2022 ||#{two_dec_pl(line[0])} ||#{two_dec_pl(line[1])} ||#{two_dec_pl(line[2])}"
+    @transactions.reverse.each do |line|
+      data += "\n#{time_to_str(line[0])} ||#{two_dec_pl(line[1])} ||#{two_dec_pl(line[2])} ||#{two_dec_pl(line[3])}"
     end
     data
   end
 
-  def deposit(amount)
+  def deposit(amount, time = Time.now)
     msg = 'deposit method takes one positive number as an argument'
     raise msg unless (amount.is_a? Numeric) && amount.positive?
 
     @balance += amount
-    @transactions.unshift([amount, 0, @balance])
+    @transactions << ([time, amount, 0, @balance])
   end
 
-  def withdraw(amount)
+  def withdraw(amount, time = Time.now)
     msg = 'withdraw method takes one positive number as an argument'
     raise msg unless (amount.is_a? Numeric) && amount.positive?
 
     @balance -= amount
-    @transactions.unshift([0, amount, @balance])
+    @transactions << ([time, 0, amount, @balance])
   end
 
   private
@@ -37,5 +37,11 @@ class BankAccount
     return '' if num.zero?
 
     " #{format('%.2f', num)}"
+  end
+
+  def time_to_str(time)
+    return time unless time.is_a? Time
+    
+    time.strftime('%d/%m/%Y')
   end
 end
