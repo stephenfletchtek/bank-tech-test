@@ -4,10 +4,6 @@ require('bank_account')
 RSpec.describe BankAccount do
   before(:each) { @my_account = BankAccount.new }
 
-  it 'shows empty statement' do
-    expect(@my_account.statement).to eq('date || credit || debit || balance')
-  end
-
   it 'adds 200 and shows statement' do
     @my_account.deposit(200)
     statement = "date || credit || debit || balance\n20/09/2022 || 200.00 || || 200.00"

@@ -15,9 +15,11 @@ class BankAccount
     data
   end
 
-  def deposit(amount)
-    @balance += amount
-    @transactions.unshift([amount, @balance])
+  def deposit(amount=0)
+    if amount.positive?
+      @balance += amount
+      @transactions.unshift([amount, @balance])
+    end
   end
 
   private
