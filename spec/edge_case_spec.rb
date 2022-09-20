@@ -18,6 +18,11 @@ RSpec.describe BankAccount do
       .to raise_error('deposit method takes one positive number as an argument')
   end
 
+  it 'negative withdrawal' do
+    expect { @my_account.withdraw(-25) }
+      .to raise_error('withdraw method takes one positive number as an argument')
+  end
+
   it 'can go overdrawn' do
     @my_account.withdraw(50)
     statement = "date || credit || debit || balance\n20/09/2022 || || 50.00 || -50.00"

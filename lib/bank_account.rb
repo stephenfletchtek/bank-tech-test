@@ -17,15 +17,15 @@ class BankAccount
 
   def deposit(amount)
     msg = 'deposit method takes one positive number as an argument'
-    fail msg unless amount.is_a? Numeric
-    fail msg unless amount.positive?
+    raise msg unless (amount.is_a? Numeric) && amount.positive?
 
     @balance += amount
     @transactions.unshift([amount, 0, @balance])
   end
 
-  def withdraw(amount = 0)
-    return unless amount.positive?
+  def withdraw(amount)
+    msg = 'withdraw method takes one positive number as an argument'
+    raise msg unless (amount.is_a? Numeric) && amount.positive?
 
     @balance -= amount
     @transactions.unshift([0, amount, @balance])

@@ -79,8 +79,8 @@ dd/mm/yyyy || 200.00 || || 200.00
 
 # deposit / withdrawal
 my_account = new BankAccount
-my_account.deposit("loadsa money") => Error: "deposit method takes one positive number as an argument"
-my_account.withdraw("loadsa money") => Error: "withdraw method takes one positive number as an argument"
+my_account.deposit("loadsa money") => Error: 'deposit method takes one positive number as an argument'
+my_account.withdraw("loadsa money") => Error: 'withdraw method takes one positive number as an argument'
 
 # round deposits / withdrawals to 2 decimal places
 my_account = new BankAccount
