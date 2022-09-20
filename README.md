@@ -24,6 +24,8 @@ date || credit || debit || balance
 
 ## Design overview
 
+I have chosen to code this tech-test in ruby.
+
 A persons money is held in a bank account where they can deposit, withdraw, and check statements amongst other activities.
 A 'BankAccount' class can fulfill these requirements.
 
@@ -33,7 +35,7 @@ class BankAccount
 end
 ```
 
-These methods provice the functionality specified:
+These methods provice the required functionality:
 
 ```ruby
 # desposit into the bank account
@@ -50,7 +52,85 @@ def statement
 end
 ```
 
+## Input / Output 
 
+Assumed behaviour is adopted where specification does not give explicit guidance
+
+```ruby
+# create bank account view with no transactions
+my_account = new BankAccount
+my_account.statement => date || credit || debit || balance
+
+# create bank account, add 200 and view statement
+my_account = new BankAccount
+my_account.deposit(200) => nothing returned but 200 will be credited to account
+my_account.statement =>
+date || credit || debit || balance
+dd/mm/yyyy || 200.00 || || 200.00
+
+# create bank account, add 200, withdraw 50 and view statement
+my_account = new BankAccount
+my_account.deposit(200) => nothing returned but 200 will be credited to account
+my_account.withdraw(50) => nothing returned but 50 will be debited from account
+my_account.statement =>
+date || credit || debit || balance
+dd/mm/yyyy || || 50.00 || 150.00
+dd/mm/yyyy || 200.00 || || 200.00
+
+# deposit / withdrawal
+my_account = new BankAccount
+my_account.deposit("loadsa money") => Error: "deposit method takes one number as an argument"
+my_account.withdraw("loadsa money") => Error: "withdraw method takes one number as an argument"
+
+# round deposits / withdrawals to 2 decimal places
+my_account = new BankAccount
+my_account.deposit(3.1415927) => nothing returned but 3.14 will be credited to account
+my_account.statement =>
+date || credit || debit || balance
+dd/mm/yyyy || 3.14 || || 3.14
+
+# allow account to go overdrawn - no overdraft limit
+my_account = new BankAccount
+my_account.withdraw(50) => nothing returned but 50 will be debited from account
+my_account.statement =>
+date || credit || debit || balance
+dd/mm/yyyy || || 50.00 || -50.00
+
+
+# withdraw / deposit blank (no args)
+my_account = new BankAccount
+my_account.withdraw() => nothing happens
+my_account.statement => date || credit || debit || balance
+
+# withdraw / deposit zero
+my_account = new BankAccount
+my_account.withdraw(0) => nothing happens
+my_account.statement => date || credit || debit || balance
+
+# withdraw / deposit calculation in args
+my_account = new BankAccount
+my_account.deposit(50 + 150) => deposits 200 and returns nothing
+my_account.statement =>
+date || credit || debit || balance
+dd/mm/yyyy || 200.00 || || 200.00
+
+# transaction date
+# *** set date to 10/01/2023 ***
+my_account.deposit(200) => nothing returned but 200 will be credited to account
+my_account.statement =>
+date || credit || debit || balance
+10/01/2023 || 200.00 || || 200.00
+
+# sort in reverse date order NOT transaction entry order
+# *** set date to 10/01/2023 ***
+my_account.deposit(200) => nothing returned but 200 will be credited to account
+# *** set date to 08/01/2023
+my_account.withdraw(50) => nothing returned but 50 will be debited from account
+my_account.statement =>
+date || credit || debit || balance
+10/01/2023 || 200.00 || || 150.00
+08/01/2023 || || 50.00 || -50.00
+```
 
 ## Dependencies
 
