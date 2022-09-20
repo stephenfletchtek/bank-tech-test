@@ -12,4 +12,9 @@ RSpec.describe BankAccount do
     @my_account.deposit()
     expect(@my_account.statement).to eq('date || credit || debit || balance')    
   end
+
+  it 'makes no deposit' do
+    @my_account.deposit(0)
+    expect(@my_account.statement).to eq('date || credit || debit || balance')    
+  end
 end
