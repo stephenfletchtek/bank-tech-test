@@ -96,7 +96,6 @@ my_account.statement =>
 date || credit || debit || balance
 dd/mm/yyyy || || 50.00 || -50.00
 
-
 # withdraw / deposit blank (no args)
 my_account = new BankAccount
 my_account.withdraw() => nothing happens
