@@ -8,14 +8,14 @@ RSpec.describe BankAccount do
     expect(@my_account.statement).to eq('date || credit || debit || balance')
   end
 
-  it 'makes no deposit' do
-    @my_account.deposit()
-    expect(@my_account.statement).to eq('date || credit || debit || balance')    
+  it 'wrong number of arguments' do
+    expect { @my_account.deposit }
+      .to raise_error('wrong number of arguments (given 0, expected 1)')
   end
 
-  it 'makes zero deposit' do
-    @my_account.deposit(0)
-    expect(@my_account.statement).to eq('date || credit || debit || balance')    
+  it 'rejects zero deposit' do
+    expect { @my_account.deposit(0) }
+      .to raise_error('deposit method takes one positive number as an argument')
   end
 
   it 'can go overdrawn' do
@@ -25,6 +25,7 @@ RSpec.describe BankAccount do
   end
 
   it 'rejects a string argument' do
-    expect{ @my_account.deposit("loadsa money") }.to raise_error("deposit method takes one positive number as an argument")
+    expect { @my_account.deposit('loadsa money') }
+      .to raise_error('deposit method takes one positive number as an argument')
   end
 end
