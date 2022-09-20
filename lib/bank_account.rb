@@ -3,32 +3,36 @@
 # BankAccount class accepts deposits, withdrawals, and check statement
 class BankAccount
   def initialize
-    @balance = 0
     @transactions = []
   end
 
   def statement
     data = 'date || credit || debit || balance'
-    @transactions.reverse.each do |line|
-      data += "\n#{time_to_str(line[0])} ||#{two_dec_pl(line[1])} ||#{two_dec_pl(line[2])} ||#{two_dec_pl(line[3])}"
+
+    balance = 0
+    data_list = @transactions.sort.map do |line|
+      balance += (line[1] - line[2])
+      "#{time_to_str(line[0])} ||#{two_dec_pl(line[1])} ||#{two_dec_pl(line[2])} ||#{two_dec_pl(balance)}"
     end
+
+    data_list.reverse.each { |line| data += "\n#{line}" }
     data
   end
 
   def deposit(amount, time = Time.now)
-    msg = 'deposit method takes one positive number as an argument'
+    msg = 'deposit method takes a positive number as first argument'
     raise msg unless (amount.is_a? Numeric) && amount.positive?
+    raise 'second argument takes a Time object' unless time.is_a? Time
 
-    @balance += amount
-    @transactions << ([time, amount, 0, @balance])
+    @transactions << ([time, amount, 0])
   end
 
   def withdraw(amount, time = Time.now)
-    msg = 'withdraw method takes one positive number as an argument'
+    msg = 'withdraw method takes a positive number as first argument'
     raise msg unless (amount.is_a? Numeric) && amount.positive?
+    raise 'second argument takes a Time object' unless time.is_a? Time
 
-    @balance -= amount
-    @transactions << ([time, 0, amount, @balance])
+    @transactions << ([time, 0, amount])
   end
 
   private
@@ -40,8 +44,6 @@ class BankAccount
   end
 
   def time_to_str(time)
-    return time unless time.is_a? Time
-    
     time.strftime('%d/%m/%Y')
   end
 end
