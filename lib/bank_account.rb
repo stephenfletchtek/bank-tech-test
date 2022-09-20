@@ -2,7 +2,8 @@
 
 # BankAccount class accepts deposits, withdrawals, and check statement
 class BankAccount
-  def initialize
+  def initialize(opening_balance = 0)
+    @opening_balance = opening_balance
     @transactions = []
   end
 
@@ -45,10 +46,10 @@ class BankAccount
   end
 
   def transaction_list(transactions)
-    balance = 0
+    accumulator = @opening_balance
     transactions.sort.map do |line|
-      balance += line[1]
-      time_to_str(line[0]).to_s + credit_debit(line[1]) + two_dec_pl(balance).to_s
+    accumulator += line[1]
+      time_to_str(line[0]).to_s + credit_debit(line[1]) + two_dec_pl(accumulator).to_s
     end
   end
 end
