@@ -4,4 +4,14 @@ source "https://rubygems.org"
 
 # gem "rails"
 
-gem "rspec", "~> 3.11"
+# gem "rspec", "~> 3.11"
+
+group :test do
+  gem 'rspec', "~> 3.11"
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
+end
+
+group :development, :test do
+  gem 'rubocop', '1.36'
+end
