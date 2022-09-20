@@ -22,6 +22,36 @@ date || credit || debit || balance
 10/01/2023 || 1000.00 || || 1000.00
 ```
 
+## Design overview
+
+A persons money is held in a bank account where they can deposit, withdraw, and check statements amongst other activities.
+A 'BankAccount' class can fulfill these requirements.
+
+```ruby
+# class name
+class BankAccount
+end
+```
+
+These methods provice the functionality specified:
+
+```ruby
+# desposit into the bank account
+def deposit(amount) # amount is a number
+end
+
+# withdraw from the bank account
+def withdraw(amount) # amount is a number
+end
+
+# print statement  - prints to console in this case
+# takes no arguments
+def statement
+end
+```
+
+
+
 ## Dependencies
 
 ```ruby
