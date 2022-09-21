@@ -2,6 +2,8 @@
 
 ## Requirements
 
+There requirements were provided in the exercise
+
 * You should be able to interact with your code via a REPL like IRB or Node. (You don't need to implement a command line interface that takes input from STDIN.)
 * Deposits, withdrawal.
 * Account statement (date, amount, balance) printing.
@@ -26,18 +28,40 @@ date || credit || debit || balance
 
 I have chosen to code this tech-test in ruby.
 
-A persons money is held in a bank account where they can deposit, withdraw, and check statements amongst other activities.
-A 'BankAccount' class can fulfill these requirements.
+A persons money is held in a bank account where they can deposit, withdraw, and view statements.
+
+* Bank class will be used to coordinate all activities 
+* BankAccount class handles transactions
+* Statement class will handles statement viewing
+
+This basic strucure gives:
+
+Model: BankAccount
+Controller: Bank
+View: Statement
+
+External interaction is via the controller
+
+### Bank class
 
 ```ruby
 # class name
-class BankAccount
+class Bank
+  def initialize
+    BankAccount.new
+    Statement.new
+  end
 end
 ```
 
-These methods provice the required functionality:
+These methods provide the required functionality:
 
 ```ruby
+# returns statement in a format that can be printed
+# takes no arguments
+def show_statement
+end
+
 # desposit into the bank account
 def deposit(amount) # amount is a number
 end
@@ -45,10 +69,39 @@ end
 # withdraw from the bank account
 def withdraw(amount) # amount is a number
 end
+```
 
-# print statement  - prints to console in this case
-# takes no arguments
-def statement
+### BankAccout class
+
+```ruby
+class BankAccount
+end
+```
+
+These methods interact with Bank class
+
+```ruby
+def transact(amount)
+  # move money in or out of the bank account
+end
+
+def all_transactions
+  # return all account transactions
+end
+```
+
+### Statement class
+
+```ruby
+class Statement
+end
+```
+
+This method interacts with Bank class
+
+```ruby
+def create_statement(bank_account)
+  # return statement information for a given BankAccount in a printable format
 end
 ```
 
@@ -58,72 +111,74 @@ Assumed behaviour is adopted where specification does not give explicit guidance
 
 ```ruby
 # create bank account view with no transactions
-my_account = new BankAccount
-my_account.statement => date || credit || debit || balance
+my_bank = Bank.new
+my_bank.show_statement => date || credit || debit || balance
 
 # create bank account, add 200 and view statement
-my_account = new BankAccount
-my_account.deposit(200) => nothing returned but 200 will be credited to account
-my_account.statement =>
+my_bank = Bank.new
+my_bank.deposit(200) => 200 will be credited to account
+my_bank.show_statement =>
 date || credit || debit || balance
 dd/mm/yyyy || 200.00 || || 200.00
 
 # create bank account, add 200, withdraw 50 and view statement
-my_account = new BankAccount
-my_account.deposit(200) => nothing returned but 200 will be credited to account
-my_account.withdraw(50) => nothing returned but 50 will be debited from account
-my_account.statement =>
+my_bank = Bank.new
+my_bank.deposit(200) => 200 will be credited to account
+my_bank.withdraw(50) => 50 will be debited from account
+my_bank.show_statement =>
 date || credit || debit || balance
 dd/mm/yyyy || || 50.00 || 150.00
 dd/mm/yyyy || 200.00 || || 200.00
 
 # deposit / withdrawal
-my_account = new BankAccount
-my_account.deposit("loadsa money") => Error: 'deposit method takes one positive number as an argument'
-my_account.withdraw("loadsa money") => Error: 'withdraw method takes one positive number as an argument'
+my_bank = Bank.new
+my_bank.deposit("loadsa money") => Error: 'method takes a positive number as an argument'
+my_bank.withdraw("loadsa money") => Error: 'method takes a positive number as an argument'
 
 # round deposits / withdrawals to 2 decimal places
-my_account = new BankAccount
-my_account.deposit(3.1415927) => nothing returned but 3.14 will be credited to account
-my_account.statement =>
+my_bank = Bank.new
+my_bank.deposit(3.1415927) => 3.1415927 will be credited to account
+my_bank.show_statement =>
 date || credit || debit || balance
 dd/mm/yyyy || 3.14 || || 3.14
 
 # allow account to go overdrawn - no overdraft limit
-my_account = new BankAccount
-my_account.withdraw(50) => nothing returned but 50 will be debited from account
-my_account.statement =>
+my_bank = Bank.new
+my_bank.withdraw(50) => 50 will be debited from account
+my_bank.show_statement =>
 date || credit || debit || balance
 dd/mm/yyyy || || 50.00 || -50.00
 
 # withdraw / deposit blank (no args)
-my_account = new BankAccount
-my_account.withdraw => 'Error: wrong number of arguments (given 0, expected 1)'
+my_bank = Bank.new
+my_bank.withdraw => 'Error: wrong number of arguments (given 0, expected 1)'
 
 # withdraw / deposit zero
-my_account = new BankAccount
-my_account.withdraw(0) => => Error: 'deposit method takes one positive number as an argument'
+my_bank = Bank.new
+my_bank.withdraw(0) => => Error: 'method takes a positive number as an argument'
 
 # withdraw / deposit calculation in args
-my_account = new BankAccount
-my_account.deposit(50 + 150) => deposits 200 and returns nothing
-my_account.statement =>
+my_bank = Bank.new
+my_bank.deposit(50 + 150) => deposits 200
+my_bank.show_statement =>
 date || credit || debit || balance
 dd/mm/yyyy || 200.00 || || 200.00
 
 # transaction date
-# *** set date to 10/01/2023 ***
-my_account.deposit(200) => nothing returned but 200 will be credited to account
-my_account.statement =>
+my_bank = Bank.new(BankAccount.new(0, mock_time))
+expect(mock_time).to receive(:now).and_return(Time.new(2023, 1, 10))
+my_bank.deposit(200) => 200 will be credited to account
+my_bank.show_statement =>
 date || credit || debit || balance
 10/01/2023 || 200.00 || || 200.00
 
 # sort in reverse date order NOT transaction entry order
-# *** set date to 10/01/2023 ***
-my_account.deposit(200) => nothing returned but 200 will be credited to account
-# *** set date to 08/01/2023
-my_account.withdraw(50) => nothing returned but 50 will be debited from account
-my_account.statement =>
+my_bank = Bank.new(BankAccount.new(0, mock_time))
+expect(mock_time).to receive(:now).and_return(Time.new(2023, 1, 10))
+my_account.deposit(200) => 200 will be credited to account
+expect(mock_time).to receive(:now).and_return(Time.new(2023, 1, 8))
+my_account.withdraw(50) => 50 will be debited from account
+my_account.show_statement =>
 date || credit || debit || balance
 10/01/2023 || 200.00 || || 150.00
 08/01/2023 || || 50.00 || -50.00
@@ -131,7 +186,7 @@ date || credit || debit || balance
 
 ## Example use
 
-This example shows the methods and responses when interacting with the Bank class usig irb
+This example shows how to use the methods, and their responses when interacting with the Bank class using irb:
 
 ```irb
 3.0.0 :001 > require('./lib/bank')
