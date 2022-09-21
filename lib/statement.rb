@@ -18,13 +18,8 @@ class Statement
     " || || #{two_dec_pl(-amount)} || "
   end
 
-  def all_transactions_with_balance(bank_account)
-    accumulator = bank_account.opening_balance
-    bank_account.all_transactions.map { |transaction| transaction << accumulator += transaction[1] }
-  end
-
   def format_transaction_list(bank_account)
-    all_transactions_with_balance(bank_account).map do |line|
+    bank_account.all_transactions.map do |line|
       line[0].strftime('%d/%m/%Y') + credit_or_debit(line[1]) + two_dec_pl(line[2])
     end
   end
