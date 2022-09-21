@@ -1,5 +1,12 @@
 # Bank tech test
 
+## Quick start
+
+* clone this repository
+* type `bundle install` to install dependencies
+
+Full details of dependencies are under the heading 'Dependencies' at the bottom of this page.
+
 ## Requirements
 
 There requirements were provided in the exercise
@@ -210,6 +217,24 @@ date || credit || debit || balance
 
 ## Dependencies
 
+This project uses:
+
+* rspec for testing
+* simplecov for test coverage
+* rubocop for linting
+
+Gemfile
+
 ```ruby
-gem "rspec", "~> 3.11"
+source "https://rubygems.org"
+
+group :test do
+  gem 'rspec', "~> 3.11"
+  gem 'simplecov', require: false
+  gem 'simplecov-console', require: false
+end
+
+group :development, :test do
+  gem 'rubocop', '1.36'
+end
 ```
