@@ -2,7 +2,11 @@
 
 require('bank_account')
 RSpec.describe BankAccount do
-  before(:each) { @my_account = BankAccount.new }
+  before(:each) do
+    time = double :time
+    expect(time).to receive(:now).and_return(Time.new(2022, 9, 20))
+    @my_account = BankAccount.new(0, time)
+  end
 
   it 'adds 200 and shows statement' do
     @my_account.deposit(200)

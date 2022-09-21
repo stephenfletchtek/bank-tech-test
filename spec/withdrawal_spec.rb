@@ -2,7 +2,11 @@
 
 require('bank_account')
 RSpec.describe BankAccount do
-  before(:each) { @my_account = BankAccount.new }
+  before(:each) do
+    @time = double :time
+    @my_account = BankAccount.new(0, @time)
+    expect(@time).to receive(:now).and_return(Time.new(2022, 9, 20, 12))
+  end
 
   it 'can go overdrawn' do
     @my_account.withdraw(50)
@@ -12,6 +16,7 @@ RSpec.describe BankAccount do
 
   it 'adds 200, withdraws 50 and shows statement' do
     @my_account.deposit(200)
+    expect(@time).to receive(:now).and_return(Time.new(2022, 9, 20, 13))
     @my_account.withdraw(50)
     statement = "date || credit || debit || balance\n"\
     "20/09/2022 || || 50.00 || 150.00\n"\

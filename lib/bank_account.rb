@@ -2,8 +2,9 @@
 
 # BankAccount class accepts deposits, withdrawals, and check statement
 class BankAccount
-  def initialize(opening_balance = 0)
+  def initialize(opening_balance = 0, time = Time)
     @opening_balance = opening_balance
+    @time = time
     @transactions = []
   end
 
@@ -13,16 +14,14 @@ class BankAccount
     output_list.reverse.join("\n")
   end
 
-  def deposit(amount, time = Time.now)
-    check_args(amount, time)
-
-    @transactions << ([time, amount])
+  def deposit(amount)
+    check_args(amount)
+    @transactions << ([@time.now, amount])
   end
 
-  def withdraw(amount, time = Time.now)
-    check_args(amount, time)
-
-    @transactions << ([time, -amount])
+  def withdraw(amount)
+    check_args(amount)
+    @transactions << ([@time.now, -amount])
   end
 
   private
@@ -49,9 +48,8 @@ class BankAccount
     end
   end
 
-  def check_args(amount, time)
+  def check_args(amount)
     msg = 'method takes a positive number as first argument'
     raise msg unless (amount.is_a? Numeric) && amount.positive?
-    raise 'second argument takes a Time object' unless time.is_a? Time
   end
 end
