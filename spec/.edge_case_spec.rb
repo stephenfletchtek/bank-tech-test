@@ -4,26 +4,26 @@ require('bank_account')
 RSpec.describe BankAccount do
   before(:each) { @my_account = BankAccount.new }
 
-  it 'shows empty statement' do
+  xit 'shows empty statement' do
     expect(@my_account.statement).to eq('date || credit || debit || balance')
   end
 
-  it 'wrong number of arguments' do
+  xit 'wrong number of arguments' do
     expect { @my_account.deposit }
       .to raise_error('wrong number of arguments (given 0, expected 1)')
   end
 
-  it 'rejects zero deposit' do
+  xit 'rejects zero deposit' do
     expect { @my_account.deposit(0) }
       .to raise_error('method takes a positive number as an argument')
   end
 
-  it 'negative withdrawal' do
+  xit 'negative withdrawal' do
     expect { @my_account.withdraw(-25) }
       .to raise_error('method takes a positive number as an argument')
   end
 
-  it 'rejects a string argument' do
+  xit 'rejects a string argument' do
     expect { @my_account.deposit('loadsa money') }
       .to raise_error('method takes a positive number as an argument')
   end

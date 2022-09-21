@@ -9,7 +9,7 @@ RSpec.describe BankAccount do
   end
 
   context 'double deposit' do
-    it 'adds 200, then 50, and shows statement' do
+    xit 'adds 200, then 50, and shows statement' do
       @my_account.deposit(200)
       expect(@time).to receive(:now).and_return(Time.new(2022, 9, 20, 13))
       @my_account.deposit(50)
@@ -19,7 +19,7 @@ RSpec.describe BankAccount do
       expect(@my_account.statement).to eq(statement)
     end
 
-    it 'adds 90, then 100, and shows statement' do
+    xit 'adds 90, then 100, and shows statement' do
       @my_account.deposit(90)
       expect(@time).to receive(:now).and_return(Time.new(2022, 9, 20, 13))
       @my_account.deposit(100)

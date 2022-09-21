@@ -8,7 +8,7 @@ RSpec.describe BankAccount do
     expect(@time).to receive(:now).and_return(Time.new(2023, 1, 10))
   end
 
-  it 'sorts in reverse date order' do
+  xit 'sorts in reverse date order' do
     @my_account.deposit(200)
     expect(@time).to receive(:now).and_return(Time.new(2023, 1, 8))
     @my_account.withdraw(50)

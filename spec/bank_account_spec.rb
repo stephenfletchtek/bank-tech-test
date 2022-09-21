@@ -16,6 +16,12 @@ RSpec.describe BankAccount do
     end
   end
 
+  context 'no transactions' do
+    it 'has no transactions' do
+      expect(@my_account.all_transactions).to eq([])
+    end
+  end
+
   context 'single transactions' do
     it 'adds 200 on 20/09/2022' do
       a_date = Time.new(2022, 9, 20)
@@ -55,6 +61,16 @@ RSpec.describe BankAccount do
       expect(@time).to receive(:now).and_return(b_date)
       expect(@my_account.transact(100)).to eq([b_date, 100])
       expect(@my_account.all_transactions).to eq([[a_date, 200], [b_date, 100]])
+    end
+
+    it 'adds 09 on 19/09/2022 and 100 on 20/09/2022' do
+      a_date = Time.new(2022, 9, 19)
+      expect(@time).to receive(:now).and_return(a_date)
+      expect(@my_account.transact(90)).to eq([a_date, 90])
+      b_date = Time.new(2022, 9, 20)
+      expect(@time).to receive(:now).and_return(b_date)
+      expect(@my_account.transact(100)).to eq([b_date, 100])
+      expect(@my_account.all_transactions).to eq([[a_date, 90], [b_date, 100]])
     end
 
     it 'adds 200 on 20/09/2022 and 100 on 19/09/2022' do

@@ -8,13 +8,13 @@ RSpec.describe BankAccount do
     expect(@time).to receive(:now).and_return(Time.new(2022, 9, 20, 12))
   end
 
-  it 'can go overdrawn' do
+  xit 'can go overdrawn' do
     @my_account.withdraw(50)
     statement = "date || credit || debit || balance\n20/09/2022 || || 50.00 || -50.00"
     expect(@my_account.statement).to eq(statement)
   end
 
-  it 'adds 200, withdraws 50 and shows statement' do
+  xit 'adds 200, withdraws 50 and shows statement' do
     @my_account.deposit(200)
     expect(@time).to receive(:now).and_return(Time.new(2022, 9, 20, 13))
     @my_account.withdraw(50)
