@@ -20,10 +20,7 @@ class Statement
 
   def all_transactions_with_balance(bank_account)
     accumulator = bank_account.opening_balance
-    bank_account.all_transactions.map do |transaction| 
-      accumulator += transaction[1]
-      transaction << accumulator
-    end
+    bank_account.all_transactions.map { |transaction| transaction << accumulator += transaction[1] }
   end
 
   def format_transaction_list(bank_account)
