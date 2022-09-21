@@ -14,7 +14,12 @@ class BankAccount
     [time, amount]
   end
 
+  # def all_transactions
+    # @transactions.sort
+  # end
+
   def all_transactions
-    @transactions.sort
+    accumulator = @opening_balance
+    @transactions.sort.map { |transaction| transaction << accumulator += transaction[1] }
   end
 end
