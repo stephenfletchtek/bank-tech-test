@@ -36,9 +36,9 @@ A persons money is held in a bank account where they can deposit, withdraw, and 
 
 This basic strucure gives:
 
-Model: BankAccount
-Controller: Bank
-View: Statement
+Model |BankAccount
+Controller | Bank
+View |Statement
 
 External interaction is via the controller
 
@@ -71,7 +71,7 @@ def withdraw(amount) # amount is a number
 end
 ```
 
-### BankAccout class
+### BankAccount class
 
 ```ruby
 class BankAccount
