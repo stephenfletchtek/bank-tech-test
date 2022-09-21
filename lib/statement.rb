@@ -1,9 +1,9 @@
 # Statement class has a create_statement method that accepts a BankAccount
 class Statement
   def create_statement(bank_account)
-    output_list = formatted_transaction_list(bank_account)
-    output_list.unshift('date || credit || debit || balance')
-    output_list.join("\n")
+    output_list = format_transaction_list(bank_account)
+    output_list << 'date || credit || debit || balance'
+    output_list.reverse.join("\n")
   end
 
   private
@@ -26,9 +26,9 @@ class Statement
     end
   end
 
-  def formatted_transaction_list(bank_account)
+  def format_transaction_list(bank_account)
     all_transactions_with_balance(bank_account).map do |line|
       line[0].strftime('%d/%m/%Y') + credit_or_debit(line[1]) + two_dec_pl(line[2])
-    end.reverse
+    end
   end
 end
