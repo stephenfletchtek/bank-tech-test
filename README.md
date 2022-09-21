@@ -36,9 +36,11 @@ A persons money is held in a bank account where they can deposit, withdraw, and 
 
 This basic strucure gives:
 
-Model |BankAccount
-Controller | Bank
-View |Statement
+| Function   | Class name  |
+| ---------- | ----------- |
+| Model      | BankAccount |
+| Controller | Bank        |
+| View       | Statement   |
 
 External interaction is via the controller
 
