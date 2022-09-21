@@ -15,16 +15,16 @@ RSpec.describe BankAccount do
 
   it 'rejects zero deposit' do
     expect { @my_account.deposit(0) }
-      .to raise_error('method takes a positive number as first argument')
+      .to raise_error('method takes a positive number as an argument')
   end
 
   it 'negative withdrawal' do
     expect { @my_account.withdraw(-25) }
-      .to raise_error('method takes a positive number as first argument')
+      .to raise_error('method takes a positive number as an argument')
   end
 
   it 'rejects a string argument' do
     expect { @my_account.deposit('loadsa money') }
-      .to raise_error('method takes a positive number as first argument')
+      .to raise_error('method takes a positive number as an argument')
   end
 end

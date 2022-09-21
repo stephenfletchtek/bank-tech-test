@@ -9,7 +9,7 @@ class BankAccount
   end
 
   def statement
-    output_list = transaction_list(@transactions)
+    output_list = sorted_transaction_list(@transactions)
     output_list << 'date || credit || debit || balance'
     output_list.reverse.join("\n")
   end
@@ -34,22 +34,22 @@ class BankAccount
     time.strftime('%d/%m/%Y')
   end
 
-  def credit_debit(amount)
+  def credit_or_debit(amount)
     return " || #{two_dec_pl(amount)} || || " if amount.positive?
 
     " || || #{two_dec_pl(-amount)} || "
   end
 
-  def transaction_list(transactions)
+  def sorted_transaction_list(transactions)
     accumulator = @opening_balance
     transactions.sort.map do |line|
       accumulator += line[1]
-      time_to_str(line[0]).to_s + credit_debit(line[1]) + two_dec_pl(accumulator).to_s
+      time_to_str(line[0]) + credit_or_debit(line[1]) + two_dec_pl(accumulator)
     end
   end
 
   def check_args(amount)
-    msg = 'method takes a positive number as first argument'
+    msg = 'method takes a positive number as an argument'
     raise msg unless (amount.is_a? Numeric) && amount.positive?
   end
 end
