@@ -9,7 +9,7 @@ Full details of dependencies are under the heading 'Dependencies' at the bottom 
 
 ## Requirements
 
-There requirements were provided in the exercise
+These requirements were provided in the exercise
 
 * You should be able to interact with your code via a REPL like IRB or Node. (You don't need to implement a command line interface that takes input from STDIN.)
 * Deposits, withdrawal.
@@ -116,10 +116,10 @@ end
 
 ## Input / Output 
 
-Assumed behaviour is adopted where specification does not give explicit guidance
+Assumed behaviour is adopted where the specification does not give explicit guidance
 
 ```ruby
-# create bank account view with no transactions
+# create bank account and view statement with no transactions
 my_bank = Bank.new
 my_bank.show_statement => date || credit || debit || balance
 
