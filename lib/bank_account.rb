@@ -15,6 +15,6 @@ class BankAccount
   end
 
   def all_transactions
-    @transactions.sort.map { |transaction| transaction }
+    @transactions.sort
   end
 end
