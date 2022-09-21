@@ -1,5 +1,5 @@
-require('bank_account')
-require('statement')
+require_relative('./bank_account')
+require_relative('./statement')
 
 # Bank class coordinates BankAccount and Statement classes
 class Bank

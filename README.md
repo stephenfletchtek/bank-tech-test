@@ -129,6 +129,28 @@ date || credit || debit || balance
 08/01/2023 || || 50.00 || -50.00
 ```
 
+## Example use
+
+This example shows the methods and responses when interacting with the Bank class usig irb
+
+```irb
+3.0.0 :001 > require('./lib/bank')
+ => true 
+3.0.0 :002 > my_bank = Bank.new
+ => #<Bank:0x00007fa97a146600 @bank_account=#<BankAccount:0x00007fa97a1465b0 @time=Time, @opening_balance=0, @transactions=[]>, @statement=#<Statement:0x00007fa97a146330>> 
+3.0.0 :003 > my_bank.deposit(1000)
+ => [2022-09-21 15:36:13.728527 +0100, 1000] 
+3.0.0 :004 > my_bank.deposit(2000)
+ => [2022-09-21 15:36:30.184626 +0100, 2000] 
+3.0.0 :005 > my_bank.withdraw(500)
+ => [2022-09-21 15:36:35.673944 +0100, -500] 
+3.0.0 :006 > print(my_bank.show_statement)
+date || credit || debit || balance
+21/09/2022 || || 500.00 || 2500.00
+21/09/2022 || 2000.00 || || 3000.00
+21/09/2022 || 1000.00 || || 1000.00 => nil
+```
+
 ## Dependencies
 
 ```ruby
