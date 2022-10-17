@@ -42,7 +42,7 @@ A persons money is held in a bank account where they can deposit, withdraw, and 
 * BankAccount class handles transactions
 * Statement class will handles statement viewing
 
-This basic strucure gives:
+This basic structure gives:
 
 | Function   | Class name  |
 | ---------- | ----------- |
